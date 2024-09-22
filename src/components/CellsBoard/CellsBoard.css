@@ -14,3 +14,16 @@
     font-weight: 700;
     font-size: 23px;
 }
+
+.resetBtn {
+    font-size: 18px;
+    border-radius: 10px;
+    color: white;
+    transition: .2s linear;
+    background: #0B63F6;
+    padding: 10px 24px;
+    border: none;
+    &:hover {
+        box-shadow: #003CC5 0 0 0 40px inset;
+    }
+}

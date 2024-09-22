@@ -24,7 +24,12 @@ const CellsBoard = () => {
 
             setCells(newCell);
             setAttempts(attempts + 1);
+
+            if (cell.hasItem) {
+                alert('You are win!');
+            }
         }
+
     };
 
     const reset = () => {
