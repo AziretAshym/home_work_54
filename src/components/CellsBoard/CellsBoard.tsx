@@ -1,19 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Cell from '../Cell/Cell.tsx';
 import './CellsBoard.css';
 
 const CellsBoard = () => {
-    const cellsArray = Array(36).fill(null).map((_, index) => (
-        <Cell key={index} />
-    ));
+    const createCells = () => {
+      const cellsArray = Array(36).fill({hasItem: false, clicked: false});
 
+      const randomCellIndex = Math.floor(Math.random() * 36);
+      cellsArray[randomCellIndex] = {hasItem: true, clicked: false};
+
+      return cellsArray;
+    };
+
+    const [cells, setCells] = useState(createCells());
+    const [attempts, setAttempts] = useState(0);
+    const cellClick = (index: number) => {
+        const cell = cells[index];
+
+        if (!cell.clicked) {
+            const newCell = cells.map((cell, i) =>
+                i === index ? { ...cell, clicked: true } : cell
+            );
+
+            setCells(newCell);
+            setAttempts(attempts + 1);
+        }
+    };
+
+    const reset = () => {
+      setCells(createCells);
+      setAttempts(0);
+    };
     return (
         <div className={'container'}>
             <h1>Find the hidden symbol</h1>
             <div className={'cellsBoard'}>
-                {cellsArray}
+                {cells.map((cell, index) => (
+                    <Cell key={index} hasItem={cell.hasItem} clicked={cell.clicked} onClick={() => cellClick(index)} />
+                ))}
             </div>
-            <p className={'attempt'}>Attempt: </p>
+            <p className={'attempt'}>Attempt: {attempts}</p>
+            <button type={'button'} className={'resetBtn'} onClick={reset}>Reset</button>
         </div>
     );
 };
