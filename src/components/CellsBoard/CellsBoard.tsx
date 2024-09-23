@@ -14,7 +14,10 @@ const CellsBoard = () => {
 
     const [cells, setCells] = useState(createCells());
     const [attempts, setAttempts] = useState(0);
+    const [gameOver, setGameOver] = useState(false);
+
     const cellClick = (index: number) => {
+        if (gameOver) return;
         const cell = cells[index];
 
         if (!cell.clicked) {
@@ -27,6 +30,7 @@ const CellsBoard = () => {
 
             if (cell.hasItem) {
                 alert('You are win!');
+                setGameOver(true);
             }
         }
 
@@ -35,6 +39,7 @@ const CellsBoard = () => {
     const reset = () => {
       setCells(createCells);
       setAttempts(0);
+      setGameOver(false);
     };
     return (
         <div className={'container'}>
